@@ -1,0 +1,40 @@
+// swift-tools-version: 6.0
+import PackageDescription
+
+let package = Package(
+    name: "LumiPluginLLMProviderAiRouter",
+    platforms: [
+        .macOS("14.0"),
+        .iOS(.v17)
+    ],
+    products: [
+        .library(name: "PluginLLMProviderAiRouter", targets: ["PluginLLMProviderAiRouter"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/lumi-softworks/LumiKernel.git", from: "1.1.1"),
+        .package(url: "https://github.com/lumi-softworks/LumiProviderLLMManager.git", from: "1.0.0"),
+        .package(url: "https://github.com/lumi-softworks/LumiKitLLM.git", from: "1.0.1"),
+        .package(url: "https://github.com/lumi-softworks/LumiLogging.git", from: "1.0.2"),
+    ],
+    targets: [
+        .target(
+            name: "PluginLLMProviderAiRouter",
+            dependencies: [
+                .product(name: "KernelCore", package: "LumiKernel"),
+                .product(name: "ProviderLLMManager", package: "LumiProviderLLMManager"),
+                .product(name: "KitLLM", package: "LumiKitLLM"),
+                .product(name: "LumiLoggingKit", package: "LumiLogging"),
+            ],
+            path: "Sources/PluginLLMProviderAiRouter"
+        ),
+        .testTarget(
+            name: "PluginLLMProviderAiRouterTests",
+            dependencies: [
+                "PluginLLMProviderAiRouter",
+                .product(name: "KernelCore", package: "LumiKernel"),
+                .product(name: "ProviderLLMManager", package: "LumiProviderLLMManager"),
+            ],
+            path: "Tests/PluginLLMProviderAiRouterTests"
+        ),
+    ]
+)
